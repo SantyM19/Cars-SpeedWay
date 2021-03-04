@@ -6,38 +6,42 @@ public class Main {
 
 
         //Configuración de Juego
-        /*
-        crear juego con jugadores, el juego debe tener los limites de kilómetros por cada pista (un jugador puede ser un conductor y un conductor debe tener un carro asociado y un carro debe estar asociado a un carril que a su vez debe estar en una pista)
-        */
 
-        //
-        //
-        // JOptionPane.showMessageDialog(null, Dado(1,6));
+        // # Players
 
         int numberPlayers = Integer.parseInt(JOptionPane.showInputDialog("Type the players number, please"));
         JOptionPane.showMessageDialog(null, numberPlayers);
+
+        // Build Players
 
         ArrayList<Driver> playersN;
 
         playersN = Users(numberPlayers);
         JOptionPane.showMessageDialog(null, playersN);
 
+        // Speedway Creating
+
         Speedway daytona = new Speedway(1, numberPlayers, 5000, "Daytona", playersN);
         JOptionPane.showMessageDialog(null, daytona);
 
         //START WE :v
+        /*ALERT Refactor*/
         int i=0, x=0;
+        ArrayList<Driver> podium = new ArrayList<Driver>();
+
         while (true){
             i++;
 
             for (int j=0 ; j<numberPlayers ; j++){
                 playersN.get(j).vehicle.velocidad(Dado(1,6));
                 if (playersN.get(j).vehicle.getDistancia()> daytona.getTotalDistance()){
-                    x=1;
+                    x++;
+                    podium.add(playersN.get(j));
+                    playersN.get(j).vehicle.setDistancia(-10000);
                 }
             }
 
-            if(x==1){
+            if(x==numberPlayers){
                 break;
             }
 
@@ -45,6 +49,8 @@ public class Main {
                 break;
             }
         }
+
+        JOptionPane.showMessageDialog(null,podium);
 
     }
 
